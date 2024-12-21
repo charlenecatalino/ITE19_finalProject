@@ -1,25 +1,33 @@
-#include <stdio.h>      // For input and output operations
-#include <string.h>     // For string manipulation functions
+#include <stdio.h>  // For input and output operations
+#include <string.h> // For string manipulation functions
 
-// Function to get the value of a Roman numeral character 
+// Function to get the value of a Roman numeral character
 int romanValue(char c)
 {
     // Use a switch-case to map Roman numeral characters to their respective integer values
     switch (c)
     {
-    case 'I': return 1;       // I represents 1
-    case 'V': return 5;       // V represents 5
-    case 'X': return 10;      // X represents 10
-    case 'L': return 50;      // L represents 50
-    case 'C': return 100;     // C represents 100
-    case 'D': return 500;     // D represents 500
-    case 'M': return 1000;    // M represents 1000
-    default: return 0;        // Return 0 for invalid characters
+    case 'I':
+        return 1; // I represents 1
+    case 'V':
+        return 5; // V represents 5
+    case 'X':
+        return 10; // X represents 10
+    case 'L':
+        return 50; // L represents 50
+    case 'C':
+        return 100; // C represents 100
+    case 'D':
+        return 500; // D represents 500
+    case 'M':
+        return 1000; // M represents 1000
+    default:
+        return 0; // Return 0 for invalid characters
     }
 }
 
 // Function to convert a Roman numeral string to a decimal (integer) value
-//iterate each roman character, from left to right
+// iterate each roman character, from left to right
 int convertRomanToDecimal(char roman[])
 {
     int total = 0, i; // Initialize total to 0, and declare loop variable i
@@ -27,8 +35,8 @@ int convertRomanToDecimal(char roman[])
     // Loop through the Roman numeral string until the null character
     for (i = 0; roman[i] != '\0'; i++)
     {
-        int current = romanValue(roman[i]);       // Get the value of the current Roman numeral
-        int next = romanValue(roman[i + 1]);     // Get the value of the next Roman numeral (if exists)
+        int current = romanValue(roman[i]);  // Get the value of the current Roman numeral
+        int next = romanValue(roman[i + 1]); // Get the value of the next Roman numeral (if exists)
 
         // If the current value is smaller than the next, subtract the current value; otherwise, add it
         if (current < next)
@@ -45,11 +53,16 @@ int performOperation(int num1, int num2, char op)
     // Use a switch-case to determine the operation based on the operator character
     switch (op)
     {
-    case '+': return num1 + num2;    // Addition
-    case '-': return num1 - num2;    // Subtraction
-    case '*': return num1 * num2;    // Multiplication
-    case '/': return num2 != 0 ? num1 / num2 : 0; // Division, handling division by zero
-    default: return 0;               // Return 0 for invalid operators
+    case '+':
+        return num1 + num2; // Addition
+    case '-':
+        return num1 - num2; // Subtraction
+    case '*':
+        return num1 * num2; // Multiplication
+    case '/':
+        return num2 != 0 ? num1 / num2 : 0; // Division, handling division by zero
+    default:
+        return 0; // Return 0 for invalid operators
     }
 }
 
@@ -66,15 +79,15 @@ void convertNumberToWords(int num, char result[])
     // Define an array for place values (e.g., thousand, million, billion)
     const char *thousands[] = {"", "Thousand", "Million", "Billion"};
 
-    char temp[256] = ""; // Temporary buffer for constructing the word result
+    char temp[256] = "";       // Temporary buffer for constructing the word result
     char chunkWords[100] = ""; // Temporary buffer for each chunk
-    result[0] = '\0'; // Clear the result buffer
-    int place = 0; // Keeps track of the place value (e.g., thousand, million)
+    result[0] = '\0';          // Clear the result buffer
+    int place = 0;             // Keeps track of the place value (e.g., thousand, million)
 
     // Handle the special case of 0
     if (num == 0)
     {
-        strcpy(result, "Zero");
+        strcpy(result, "Zero"); // set result to zero
         return;
     }
 
@@ -90,18 +103,18 @@ void convertNumberToWords(int num, char result[])
             {
                 int hundreds = chunk / 100;
                 sprintf(chunkWords + strlen(chunkWords), "%s Hundred ", ones[hundreds]);
-                chunk %= 100;
+                chunk %= 100; // Reduce the chunk to tens and ones
             }
             if (chunk >= 20) // Process tens place for numbers >= 20
             {
                 int tensPlace = chunk / 10;
                 sprintf(chunkWords + strlen(chunkWords), "%s ", tens[tensPlace]);
-                chunk %= 10;
+                chunk %= 10; // Reduce to ones place
             }
             else if (chunk >= 10) // Process 'teens' numbers
             {
                 sprintf(chunkWords + strlen(chunkWords), "%s ", teens[chunk - 10]);
-                chunk = 0;
+                chunk = 0; // No further processing for ones
             }
             if (chunk > 0) // Process ones place
             {
@@ -113,7 +126,7 @@ void convertNumberToWords(int num, char result[])
             }
         }
 
-        // Prepend the current chunk to the result
+        // Attach the current chunk to the result
         sprintf(temp, "%s%s", chunkWords, result);
         strcpy(result, temp);
 
@@ -122,8 +135,8 @@ void convertNumberToWords(int num, char result[])
     }
 
     // Remove any trailing space from the result
-    size_t len = strlen(result);
-    if (len > 0 && result[len - 1] == ' ')
+    size_t len = strlen(result);           // Calculate the length of the result
+    if (len > 0 && result[len - 1] == ' ') // remove trailing space
     {
         result[len - 1] = '\0';
     }
@@ -142,8 +155,8 @@ int main()
     FILE *input = fopen("C:\\CSU Docs\\Senior Years\\ITE 19\\final_project\\Input.txt", "r");
     FILE *output = fopen("C:\\CSU Docs\\Senior Years\\ITE 19\\final_project\\Output.txt", "w");
     char line[256], roman1[20], roman2[20], op; // Buffers for input line and extracted data
-    int num1, num2, result; // Variables for operands and result
-    char wordResult[100]; // Buffer for result in words
+    int num1, num2, result;                     // Variables for the numbers and operation result
+    char wordResult[100];                       // Buffer for result in words
 
     // Check if either the input or output file failed to open
     if (!input || !output)
@@ -158,8 +171,8 @@ int main()
         // Parse the line into two Roman numerals and an operator
         if (sscanf(line, " %19s %c %19s ", roman1, &op, roman2) == 3)
         {
-            num1 = convertRomanToDecimal(roman1); // Convert first Roman numeral to decimal
-            num2 = convertRomanToDecimal(roman2); // Convert second Roman numeral to decimal
+            num1 = convertRomanToDecimal(roman1);      // Convert first Roman numeral to decimal
+            num2 = convertRomanToDecimal(roman2);      // Convert second Roman numeral to decimal
             result = performOperation(num1, num2, op); // Perform the operation
 
             // Display the process in the console
@@ -168,8 +181,8 @@ int main()
             // Handle negative results
             if (result < 0)
             {
-                fprintf(output, "Negative ");
-                result = -result; // Convert to positive for word conversion
+                fprintf(output, "Negative "); // Write "Negative" to the output file
+                result = -result;             // Convert to positive for word conversion
             }
 
             // Convert result to words and write to output file
@@ -188,5 +201,5 @@ int main()
     fclose(output);
 
     printf("Processing complete. Check Output.txt for results.\n"); // Notify the user
-    return 0;
+    return 0;                                                       // Return 0 to indicate successful execution
 }
