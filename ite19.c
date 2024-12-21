@@ -139,7 +139,7 @@ void displayOperationProcess(int num1, int num2, char op, int result)
 int main()
 {
     // Open the input file in read mode and output file in write mode
-    FILE *input = fopen("C:\\CSU Docs\\Senior Years\\ITE 19\\final_project\\Input2.txt", "r");
+    FILE *input = fopen("C:\\CSU Docs\\Senior Years\\ITE 19\\final_project\\Input.txt", "r");
     FILE *output = fopen("C:\\CSU Docs\\Senior Years\\ITE 19\\final_project\\Output.txt", "w");
     char line[256], roman1[20], roman2[20], op; // Buffers for input line and extracted data
     int num1, num2, result; // Variables for operands and result
